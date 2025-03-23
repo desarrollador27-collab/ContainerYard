@@ -1,71 +1,104 @@
 package com.projectest.sigcon.models;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Table;
 
 @Entity
-@AllArgsConstructor
+@Table(name = "users")
 public class Users {
-	
-	public enum Role_User{
-		ADMIN,
-		USER;
-
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-
-	private String fullname;
+	private String username;
 	private String email;
-	private String phone;
 	private String password;
-	private Role_User role_user;
+	
+	@Enumerated(EnumType.STRING)
+	private Role role;
+
+	public Users() {}
+	
+	public Users(String username,String email, String password, Role role) {
+		
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
 	
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public String getFullname() {
-		return fullname;
+
+	public String getUsername() {
+		return username;
 	}
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Role_User getRole_user() {
-		return role_user;
-	}
-	public void setRole_user(Role_User role_user) {
-		this.role_user = role_user;
+
+	public Role getRole() {
+		return role;
 	}
 
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, id, password, role, username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Users other = (Users) obj;
+		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
+				&& Objects.equals(password, other.password) && role == other.role
+				&& Objects.equals(username, other.username);
+	}
+
+	@Override
+	public String toString() {
+		return "Users [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role="
+				+ role + "]";
+	}
 	
 
 }

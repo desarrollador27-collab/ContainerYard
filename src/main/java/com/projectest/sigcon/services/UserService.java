@@ -1,7 +1,9 @@
 package com.projectest.sigcon.services;
 
 
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.projectest.sigcon.dto.UserDTO;
 import com.projectest.sigcon.models.Users;
@@ -9,58 +11,48 @@ import com.projectest.sigcon.repository.UserRepository;
 
 public class UserService {
 	
+	private UserRepository userRepository;
 	
-	private final UserRepository userRepository = null;
 	
 	
-	// Services to create User and save in DataBase
-	public UserDTO createUser(UserDTO userdto) {
+	//Method for create User Entity for be saved in the DB.
+	public UserDTO createUser(Users user) {
 		
-		if(userRepository.existsById(userdto.getId())) {
-			throw new IllegalArgumentException("Usuario no disponible, ya existe");
-		}
-		Users user = new Users();
-		user.setFullname(userdto.getFullname());
-		user.setEmail(userdto.getEmail());
-		user.setPhone(userdto.getPhone());
-		user.setPassword(userdto.getPassword());
-		user.setRole_user(userdto.getRole_user());
-		
-		Users saveuser = userRepository.save(user);
-		return mapUserToDTO(saveuser);
-	
+		Users savedUser = userRepository.save(user);
+		return convertToDTO(savedUser);
 	}
 	
-	// Services to find All Users created in the DataBase
+	//Method for show all Users
 	public List<UserDTO> findAllUsers(){
 		
-		return userRepository.findAll().stream().map(this::mapUserToDTO).toList();
+		return userRepository.findAll().stream()
+				.map(this::convertToDTO).collect(Collectors.toList());
 	}
 	
-	
-	public Users updateUser(Long id, UserDTO userdto) {
-		
+	// Method for update User by Id
+	public UserDTO updateUser(Long id, Users updatedUser) {
+		Users existingUser = userRepository.findById(id).orElse(null);
+		if(existingUser!= null) {
+			existingUser.setUsername(updatedUser.getUsername());
+			existingUser.setEmail(updatedUser.getEmail());
+			existingUser.setPassword(updatedUser.getPassword());
+			existingUser.setRole(updatedUser.getRole());
+			Users savedUser = userRepository.save(existingUser);
+			return convertToDTO(savedUser);
+		}
 		return null;
 	}
-
-
+	
+	//Method for delete User saved in DB by Id
+	public void deleteUser(Long id) {
+		userRepository.deleteById(id);
+	}
 	
 	
-	
-	
-	
-	
-	private UserDTO mapUserToDTO(Users user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setFullname(user.getFullname());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setPhone(user.getPhone());
-        userDTO.setRole_user(user.getRole_user());
-
-        return userDTO;
-    }
-	
-	
+	//Method to convert User Entity in UserDTO collect.
+	private UserDTO convertToDTO(Users user) {
+		
+		return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getRole());
+	}
 
 }
