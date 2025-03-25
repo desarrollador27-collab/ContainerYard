@@ -3,16 +3,16 @@ package com.projectest.sigcon.dto;
 import com.projectest.sigcon.models.Role;
 
 public class UserDTO {
-	
+
 	private Long id;
-	
+
 	private String usarname;
 	private String email;
-	
+
 	private Role role;
-	
+
 	public UserDTO() {}
-	
+
 	public UserDTO(Long id, String username, String email, String password, Role role) {
 		this.id = id;
 		this.usarname = username;
@@ -51,7 +51,7 @@ public void setRole(Role role) {
 
 
 
-	
-	
-	
+
+
+
 }

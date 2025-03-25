@@ -11,15 +11,15 @@ import lombok.AllArgsConstructor;
 @Entity
 @AllArgsConstructor
 public class Shiplines {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String name_shipline;
 	private String email_shipline;
 	private String phone_shipline;
-	
+
 	public String getName_shipline() {
 		return name_shipline;
 	}
@@ -39,6 +39,6 @@ public class Shiplines {
 		this.phone_shipline = phone_shipline;
 	}
 
-	
+
 
 }

@@ -22,17 +22,17 @@ import com.projectest.sigcon.services.UserService;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
-	
+
+
 	//Get  All Users
 	@GetMapping
 	public List<UserDTO> getAllUsers(){
 		return userService.findAllUsers();
 	}
-	
+
 	//Get User by Id
 	@GetMapping("/{id}")
 	public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
@@ -42,16 +42,16 @@ public class UserController {
 		}else {
 			return ResponseEntity.notFound().build();
 		}
-		
+
 	}
-	
+
 	//Methods to create a Users
 	@PostMapping
 	public ResponseEntity<UserDTO> CreateUser(@RequestBody Users user){
 		UserDTO saveUser = userService.saveUser(user);
-		return ResponseEntity.status(HttpStatus.CREATED).body(saveUser);		
+		return ResponseEntity.status(HttpStatus.CREATED).body(saveUser);
 	}
-	
+
 	//Method to update a User
 	@PutMapping("/{id}")
 	public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody Users user){
@@ -59,12 +59,12 @@ public class UserController {
 		if(updateUser != null) {
 			return ResponseEntity.ok(updateUser);
 		}else {
-			return ResponseEntity.notFound().build();		
+			return ResponseEntity.notFound().build();
 		}
-		
+
 	}
-	
-	
+
+
 	//Delete to User
 	@DeleteMapping("/{id}")
 	public ResponseEntity<UserDTO> deleteUser(@PathVariable Long id){
@@ -75,6 +75,6 @@ public class UserController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 
 }

@@ -13,28 +13,28 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 public class Users {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String username;
 	private String email;
 	private String password;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
 	public Users() {}
-	
+
 	public Users(String username,String email, String password, Role role) {
-		
+
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.role = role;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -74,7 +74,7 @@ public class Users {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(email, id, password, role, username);
@@ -82,12 +82,12 @@ public class Users {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if ((obj == null) || (getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		Users other = (Users) obj;
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
 				&& Objects.equals(password, other.password) && role == other.role
@@ -99,6 +99,6 @@ public class Users {
 		return "Users [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role="
 				+ role + "]";
 	}
-	
+
 
 }

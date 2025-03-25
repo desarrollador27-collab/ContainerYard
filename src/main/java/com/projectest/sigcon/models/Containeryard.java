@@ -10,29 +10,29 @@ import lombok.AllArgsConstructor;
 @Entity
 @AllArgsConstructor
 public class Containeryard {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private String equipment;//this is the number container 
-	
-	
+
+	private String equipment;//this is the number container
+
+
 	// this methods will utilize for modify or update number container.
 	public void setEquipment(String equipment) {this.equipment = equipment;}
-	
-	
+
+
 	public String getEquipment() {
 		return equipment;
 	}
-	
-	
+
+
 	public enum Size_equipment{
 		TWENTY_FOOT,
 		FOURTY_FOOT;
-		
+
 	}
-	
+
 	public enum Type_equipment{
 		DRY_VAN,
 		HIGH_CUBE,
@@ -40,25 +40,25 @@ public class Containeryard {
 		REEFER,
 		OPEN_TOP,
 		FLAT_RACK;
-		
+
 	}
-	
+
 	public enum State_equipment{
 		DAMAGED,
 		DIRTY,
 		GOOD;
-		
+
 	}
-	
+
 
 	public static class Containerdefine{ //Define a Container with its properties
-		
-		
+
+
 		private Containeryard containeryard;
 		private Size_equipment size;
 		private Type_equipment type;
 		private State_equipment state;
-		
+
 
 		public Size_equipment getSize() {
 			return size;
@@ -99,7 +99,7 @@ public class Containeryard {
 			this.state = state;
 		}
 
-	
+
 		@Override
 		public String toString() {
 		    return "Container{" +
@@ -109,18 +109,18 @@ public class Containeryard {
                     ", Status='" + getState()+ '\'' +
                     '}';
 		}
-		
-		
-	}
-	
-		
-}
-	
 
-	
-	
-	
-	
-	
+
+	}
+
+
+}
+
+
+
+
+
+
+
 
 
