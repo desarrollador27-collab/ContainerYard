@@ -28,7 +28,7 @@ public class UserController {
 
 
 	//Get  All Users
-	@GetMapping
+	@GetMapping("/users_list")
 	public List<UserDTO> getAllUsers(){
 		return userService.findAllUsers();
 	}
@@ -46,7 +46,7 @@ public class UserController {
 	}
 
 	//Methods to create a Users
-	@PostMapping
+	@PostMapping("/create")
 	public ResponseEntity<UserDTO> CreateUser(@RequestBody Users user){
 		UserDTO saveUser = userService.saveUser(user);
 		return ResponseEntity.status(HttpStatus.CREATED).body(saveUser);

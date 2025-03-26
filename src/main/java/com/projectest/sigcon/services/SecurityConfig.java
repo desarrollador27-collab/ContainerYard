@@ -1,4 +1,4 @@
-package com.projectest.sigcon.services;
+/*package com.projectest.sigcon.services;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,4 +12,4 @@ public class SecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-}
+}*/

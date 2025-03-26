@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.projectest.sigcon.dto.UserDTO;
@@ -21,8 +20,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	//@Autowired
+	//private PasswordEncoder passwordEncoder;
 
 	//List UserDTO
 	private final List<UserDTO> users = new ArrayList<>();
@@ -30,8 +29,8 @@ public class UserService {
 
 	//Method for create User Entity for be saved in the DB.
 	public UserDTO saveUser(Users user) {
-		String encoderPassword = passwordEncoder.encode(user.getPassword());
-		user.setPassword(encoderPassword);
+		//String encoderPassword = passwordEncoder.encode(user.getPassword());
+		//user.setPassword(encoderPassword);
 		Users savedUser = userRepository.save(user);
 		return convertToDTO(savedUser);
 	}
