@@ -33,15 +33,11 @@ public class UserController {
 		return userService.findAllUsers();
 	}
 
-	//Get User by Id
+	//Get User by id
 	@GetMapping("/{id}")
 	public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
 		Optional<UserDTO> user = userService.getUserById(id);
-		if(user.isPresent()) {
-			return ResponseEntity.ok(user.get());
-		}else {
-			return ResponseEntity.notFound().build();
-		}
+        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 
 	}
 

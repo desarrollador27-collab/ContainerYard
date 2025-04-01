@@ -1,11 +1,15 @@
 package com.projectest.sigcon.dto;
 
 import com.projectest.sigcon.models.Role;
+import lombok.Data;
 
+@Data
 public class UserDTO {
+
 
 	private Long id;
 
+	
 	private String usarname;
 	private String email;
 	private String password;
@@ -13,7 +17,10 @@ public class UserDTO {
 
 	private Role role;
 
-	public UserDTO() {}
+	public UserDTO(Long id, String username, String email, String password, Role role) {
+	}
+
+	/*public UserDTO() {}
 
 	public UserDTO(Long id, String username, String email, String password, Role role) {
 		this.id = id;
@@ -56,12 +63,5 @@ public void setRole(Role role) {
 	this.role = role;
 }
 
-
-
-
-
-
-
-
-
+*/
 }

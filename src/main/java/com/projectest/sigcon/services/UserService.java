@@ -2,7 +2,6 @@ package com.projectest.sigcon.services;
 
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,60 +16,61 @@ import com.projectest.sigcon.repository.UserRepository;
 @Service
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private final UserRepository userRepository;
 
-	//@Autowired
-	//private PasswordEncoder passwordEncoder;
+    //@Autowired
+   // private PasswordEncoder passwordEncoder;
 
-	//List UserDTO
-	private final List<UserDTO> users = new ArrayList<>();
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
+    // Method for create User Entity for saving in DB
+    public UserDTO saveUser(Users user) {
+        //String encodedPassword = passwordEncoder.encode(user.getPassword());
+        //user.setPassword(encodedPassword);
+        Users savedUser = userRepository.save(user);
+        return convertToDTO(savedUser);
+    }
 
-	//Method for create User Entity for be saved in the DB.
-	public UserDTO saveUser(Users user) {
-		//String encoderPassword = passwordEncoder.encode(user.getPassword());
-		//user.setPassword(encoderPassword);
-		Users savedUser = userRepository.save(user);
-		return convertToDTO(savedUser);
-	}
+    // Method for showing all Users
+    public List<UserDTO> findAllUsers() {
+        return userRepository.findAll().stream()
+                .map(this::convertToDTO).collect(Collectors.toList());
+    }
 
-	//Method for show all Users
-	public List<UserDTO> findAllUsers(){
+    // Get user by Id
+    public Optional<UserDTO> getUserById(Long id) {
+        Optional<Users> user = userRepository.findById(id);
+        return user.map(this::convertToDTO);
+    }
 
-		return userRepository.findAll().stream()
-				.map(this::convertToDTO).collect(Collectors.toList());
-	}
+    // Method for updating User by Id
+    public UserDTO updateUser(Long id, Users updatedUser) {
+        Users existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-	//Get user by Id
-	public Optional<UserDTO> getUserById(Long id){
-		return users.stream().filter(user -> user.getId().equals(id)).findFirst();
-	}
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setPassword(updatedUser.getPassword());
+        existingUser.setRole(updatedUser.getRole());
+        
+        Users savedUser = userRepository.save(existingUser);
+        return convertToDTO(savedUser);
+    }
 
-	// Method for update User by Id
-	public UserDTO updateUser(Long id, Users updatedUser) {
-		Users existingUser = userRepository.findById(id).orElse(null);
-		if(existingUser!= null) {
-			existingUser.setUsername(updatedUser.getUsername());
-			existingUser.setEmail(updatedUser.getEmail());
-			existingUser.setPassword(updatedUser.getPassword());
-			existingUser.setRole(updatedUser.getRole());
-			Users savedUser = userRepository.save(existingUser);
-			return convertToDTO(savedUser);
-		}
-		return null;
-	}
+    // Method for deleting User by Id
+    public boolean deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 
-	//Method for delete User saved in DB by Id
-	public boolean deleteUser(Long id) {
-		return users.removeIf(user -> user.getId().equals(id));
-	}
-
-
-	//Method to convert User Entity in UserDTO collect.
-	private UserDTO convertToDTO(Users user) {
-
-		return new UserDTO(user.getId(), user.getUsername(), user.getEmail(),user.getPassword(), user.getRole());
-	}
-
+    // Method to convert User Entity to UserDTO
+    private UserDTO convertToDTO(Users user) {
+        return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getRole());
+    }
 }
