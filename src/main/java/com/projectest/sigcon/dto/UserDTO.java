@@ -17,10 +17,9 @@ public class UserDTO {
 
 	private Role role;
 
-	public UserDTO(Long id, String username, String email, String password, Role role) {
-	}
 
-	/*public UserDTO() {}
+
+	public UserDTO() {}
 
 	public UserDTO(Long id, String username, String email, String password, Role role) {
 		this.id = id;
@@ -30,7 +29,7 @@ public class UserDTO {
 		this.role = role;
 	}
 
-
+	/*
 public Long getId() {
 	return id;
 }
